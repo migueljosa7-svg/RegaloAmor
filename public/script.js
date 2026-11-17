@@ -34,14 +34,14 @@ No hemos podido celebrarlo el día 19, pero me da igual la fecha: cualquier día
 
 Te quiero muchísimo. Y esto es solo el principio.
 
-${FIRMA} 💗`;
+${FIRMA} 💙`;
 
 /* =========================================================
    Utilidades
    ========================================================= */
 const $ = (s) => document.querySelector(s);
 const reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
-const EMOJIS = ["💗", "💖", "💕", "❤️", "💘", "✨", "🌸"];
+const EMOJIS = ["💙", "💙", "💙", "🩵", "✨", "⭐"];
 
 /* Corazones flotantes de fondo */
 function spawnFloater() {
@@ -143,7 +143,7 @@ function startStory() {
   REASONS.forEach((t) => {
     const c = document.createElement("div");
     c.className = "card reveal";
-    c.innerHTML = `<div class="in"><div class="f">💗</div><div class="b">${t}</div></div>`;
+    c.innerHTML = `<div class="in"><div class="f">💙</div><div class="b">${t}</div></div>`;
     c.addEventListener("click", () => {
       c.classList.toggle("flip");
       const r = c.getBoundingClientRect();
@@ -206,3 +206,34 @@ document.addEventListener("click", (e) => {
   lb.onclick = () => lb.remove();
   document.body.appendChild(lb);
 });
+
+/* ===== Cielo: estrellas, estrellas fugaces y destellos de la caja ===== */
+(function sky() {
+  const sky = document.createElement("div");
+  sky.id = "stars";
+  sky.setAttribute("aria-hidden", "true");
+  const n = innerWidth < 600 ? 45 : 90;
+  for (let i = 0; i < n; i++) {
+    const s = document.createElement("i");
+    s.style.cssText = `left:${Math.random() * 100}%;top:${Math.random() * 100}%;--s:${1 + Math.random() * 2.5}px;--t:${2 + Math.random() * 4}s;--d:${-Math.random() * 5}s`;
+    sky.appendChild(s);
+  }
+  document.body.prepend(sky);
+  if (!reduce) setInterval(() => {
+    if (document.hidden) return;
+    const b = document.createElement("b");
+    b.style.left = 40 + Math.random() * 60 + "%";
+    b.style.top = Math.random() * 40 + "%";
+    sky.appendChild(b);
+    setTimeout(() => b.remove(), 1400);
+  }, 3500);
+
+  const bx = document.getElementById("box");
+  if (bx && !reduce) for (let i = 0; i < 8; i++) {
+    const sp = document.createElement("span");
+    sp.className = "spark";
+    sp.textContent = "✦";
+    sp.style.cssText = `--r:${95 + Math.random() * 45}px;--o:${6 + Math.random() * 6}s;--d:${-Math.random() * 8}s`;
+    bx.appendChild(sp);
+  }
+})();
